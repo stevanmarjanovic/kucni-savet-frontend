@@ -8,6 +8,7 @@ export interface User {
   name: string
   image: string
   household: Household
+  onboardingStep: string
 }
 
 export interface Chore {

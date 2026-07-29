@@ -68,13 +68,13 @@ export async function login(facebookAccessToken: string) {
 
   setAccessToken(response.token)
 
-  router.push({ name: 'home' })
+  return response
 }
 
 export async function logout() {
   removeAccessToken()
 
-  router.push({ name: 'home' })
+  return true
 }
 
 /**
@@ -82,6 +82,10 @@ export async function logout() {
  */
 export async function currentUser() {
   return request<User>('/user')
+}
+
+export async function updateUser(user: User) {
+  return request<User>('/user', 'PUT', user)
 }
 
 export async function householdUsers() {
@@ -92,27 +96,22 @@ export async function householdUsers() {
  * CHORE CONTROLLER
  */
 export async function getAllChores() {
-  const response = await request<Chore[]>("chore/household")
-  return response
+  return await request<Chore[]>("chore/household")
 }
 
 export async function createChore(chore: Chore) {
   console.log("Creating chore", chore)
-  const response = await request<Chore>('chore', 'POST', chore)
-  return response
+  return await request<Chore>('chore', 'POST', chore)
 }
 
 export async function assignChore(choreId: string, assigneeId: string) {
-  const response = await request<Chore>(`chore/${choreId}/assign/${assigneeId}`, 'PATCH')
-  return response
+  return await request<Chore>(`chore/${choreId}/assign/${assigneeId}`, 'PATCH')
 }
 
 export async function updateChoreAssignees(choreId: string, assignees: User[]) {
-  const response = await request<Chore>(`chore/${choreId}/assignees`, 'PATCH', { assignees })
-  return response
+  return await request<Chore>(`chore/${choreId}/assignees`, 'PATCH', {assignees})
 }
 
 export async function markChoreAsDone(choreId: string) {
-  const response = await request<Chore>(`chore/${choreId}/mark-done`, 'PATCH')
-  return response
+  return await request<Chore>(`chore/${choreId}/mark-done`, 'PATCH')
 }

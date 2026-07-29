@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {logout} from "@/api/backend.ts";
+import router from "@/router";
 
 defineProps({
   items: {
@@ -9,6 +10,11 @@ defineProps({
 })
 
 const defaultHref = { name: 'home' }
+
+const handleLogout = async () => {
+  await logout()
+  router.push({ name: 'home' })
+}
 </script>
 
 <template>
@@ -18,7 +24,7 @@ const defaultHref = { name: 'home' }
       {{ item.label }}
     </RouterLink>
   </template>
-  <a class="menu-link" href="#!" @click.prevent="logout()">Logout</a>
+  <a class="menu-link" href="#!" @click.prevent="handleLogout()">Logout</a>
 </div>
 </template>
 

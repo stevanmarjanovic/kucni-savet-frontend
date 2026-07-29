@@ -3,6 +3,7 @@ import type {Chore} from "@/api/models";
 import {computed, type PropType, reactive} from "vue";
 import {naturalizeFrequency} from "@/api/enums.ts";
 import Tag from "@/components/Tag.vue";
+import {colors} from "@/constants.ts";
 
 const props = defineProps({
   chore: {
@@ -19,15 +20,6 @@ const naturalizedLastDone = computed(() => {
 
   return lastDone.toLocaleString("sr-RS")
 })
-
-const colors = [
-  "#2D74F8",
-  "#F6D215",
-  "#54CE89",
-  "#FD761C",
-  "#FA3C33",
-  "#786BF7"
-]
 
 // TODO Make this not random but stored in database
 const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -75,6 +67,7 @@ const randomAngle = () => Math.floor(Math.random() * 11) - 5;
   font-size: 2rem;
   line-height: 0.8;
   max-width: 90%;
+  color: var(--color-black);
 }
 
 .chore-footer {

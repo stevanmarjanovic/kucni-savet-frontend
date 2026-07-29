@@ -4,6 +4,7 @@ import {computed, onMounted, type PropType, reactive, ref} from "vue";
 import {naturalizeFrequency} from "@/api/enums.ts";
 import {useUserStore} from "@/stores/user.ts";
 import {householdUsers, markChoreAsDone, updateChoreAssignees} from "@/api/backend.ts";
+import {colors, imageSrc} from "@/constants.ts";
 
 const props = defineProps({
   chore: {
@@ -37,20 +38,11 @@ const updateAssignees = (chore: Chore) => {
   updateChoreAssignees(chore.id, chore.assignees)
 }
 
-const imageSrc = (user: User) => `${import.meta.env.VITE_BACKEND_URL}/api/user/${ user.id }/image`
-
 onMounted(async () => {
   users = await householdUsers()
 })
 
-const colors = [
-  "#2D74F8",
-  "#F6D215",
-  "#54CE89",
-  "#FD761C",
-  "#FA3C33",
-  "#786BF7"
-]
+
 
 // TODO Make this not random but stored in database
 const randomColor = colors[Math.floor(Math.random() * colors.length)];

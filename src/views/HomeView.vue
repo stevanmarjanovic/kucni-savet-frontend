@@ -6,6 +6,7 @@ import {computed, onMounted, ref} from "vue";
 import {useUserStore} from "@/stores/user.ts";
 import MyChoreSummary from "@/components/MyChoreSummary.vue";
 import OthersChoreSummary from "@/components/OthersChoreSummary.vue";
+import {colors, imageSrc} from "@/constants.ts";
 
 const user = useUserStore().user;
 const chores = ref<Chore[]>([]);
@@ -26,11 +27,16 @@ const othersChores = computed(() => {
 
   return chores.value.filter(chore => chore.assignees.length && !chore.assignees.some(assignee => assignee.id === user?.id));
 })
+
+const randomColor = colors[Math.floor(Math.random() * colors.length)];
 </script>
 
 <template>
   <div>
     <AppLayout>
+      <div class="my-profile" :style="{ backgroundColor: randomColor }">
+        <img :src="imageSrc(user)" alt="User Image" class="user-image" />
+      </div>
       <!-- TODO Ovo prebaciti u zasebnu komponentu eventualno -->
       <div class="title-container">
         <h2 class="title">Danas na meniju</h2>
@@ -75,5 +81,20 @@ const othersChores = computed(() => {
 
 .title-description {
   font-weight: bold;
+}
+
+.my-profile {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+.my-profile img {
+  width: 50px;
 }
 </style>
